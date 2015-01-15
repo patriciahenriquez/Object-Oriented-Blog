@@ -1,14 +1,7 @@
-# building the text file: keynote i.e. a presentation
-# presentation has slides
-	#after the slides are added a prompt will show 
-#presentation has prompts 
-#the text in the slides have to have a certain placement
-		# in order to place the text in the slides with the given placement will need to require terminfo 
-		# depending of the size of the terminal the text must be centered horizontally and vertically 
-
 require "pp"
 
 class Presentation
+	attr_accessor:slides
 
 	def initialize
 		@slides = []
@@ -18,30 +11,31 @@ class Presentation
 		@slides << slides
 	end 
 
-	def view_slide
-		puts @slides
+	def show_slides(placeinarray)
+		@placeinarray = @slides[placeinarray]
+		puts @placeinarray
 	end
 
-	def to_s
-		return 
-	end 
+	# def show_slide
 
 
 end  
-
-
 
 class Slides 
 	# require 'TermInfo'
 
 	def initialize(text)
 	@text = text
-	@text.strip
+	# @text.strip
 	end 
 
 	def view_content
 	puts @text
 	end 
+
+	def to_s
+		return "#{@text}"
+	end
 
 # def terminal_size
 # 	@terminal_size = Terminfo.screen_size	
@@ -63,34 +57,95 @@ patriciappt = Presentation.new
 #read from keynot.txt and convert that to an array
 slide_content = IO.read("keynote.txt").split("--------------")
 
-#pretty print the array of slide contents
-
-pp slide_content
-
 # create slides with file content
 
 slide1 = Slides.new(slide_content[0])
 slide2 = Slides.new(slide_content[1])
 slide3 = Slides.new(slide_content[2])
 
-#view the content of slide 1 
+#view the content of slide 1 : slide1.view_content
 
-slide1.view_content
-
-# #then add first slide to presentation (add array to presentation)
+# #then add slides to presentation (add array to presentation) presentation has an array with slides not visible 
 patriciappt.Add_Slides(slide1)
 patriciappt.Add_Slides(slide2)
 patriciappt.Add_Slides(slide3)
-#view slides in presentation 
 
-patriciappt.view_slide
+# show the slide 1 
 
-# #prompt user 
+patriciappt.show_slides(0)
 
-#         puts "\nSelect:"
-#         puts "   - NEXT: for Next Slide"
-#         puts "   - PREVIOUS: for Previous Slide"
+#prompt user 
+
+
+ 
+  # show second slide if next is selected 
+      
+       
+ selector = nil
+while selector != "Next"
+	  puts "\nSelect:"
+      puts "   - Next: for Next Slide"
+      selector = gets.chomp
+           
+        if selector == "Next"
+        	patriciappt.show_slides(1)
+        else
+          puts "Invalid entry"
+      end
+  end
+
+# show first or third slide 
+	while selector != "Next" || != "Previous"
+		puts "\nSelect:"
+        puts "   - Next: for Next Slide"
+        puts "   - Previous: for Previous Slide"
+        selector = gets.chomp
+       
+        if selector == "Next"
+        	patriciappt.show_slides(2)
+        elsif selector == "Previous"
+          	patriciappt.show_slides(0)
+          else 
+          	puts "invalid entry"
+      end
+  end
+
+
+while selector != "Next"
+		puts "\nSelect:"
+        puts "   - Previous: for Previous Slide"
+        puts "   - Exit: to Exit Presentation"
+        selector = gets.chomp
+
+        if selector == "Previous"
+        	patriciappt.show_slides(1)
+        elsif selector == "Exit"
+
+        else  
+        	puts "Invalid entry"
+        end
+end
+
+
+# selector = nil
+# while selector == "Next"
+#            puts "   - PREVIOUS: for Previous Slide"
 #         selector = gets.chomp
+
+
+   #          puts "Your word count is #{ word_modifier.count }."
+   #      elsif option == "letters"
+   #          puts "Your letter count is #{word_modifier.letter_count}."
+   #      elsif option == "reverse"
+   #          puts "Your reverse text #{word_modifier.reverse}."
+   #      elsif option == "up"
+   #          puts "Your CAPS text is #{word_modifier.caps}."
+   #      elsif option == "down"
+   #          puts "Your lowercase text is #{word_modifier.downcase}."
+   #      end
+   #  end 
+
+
 
 # # # if the selector is Next then add second slide else if show error 
 # if selector == "Next" 
