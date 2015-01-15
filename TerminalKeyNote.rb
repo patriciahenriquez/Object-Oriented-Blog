@@ -18,8 +18,13 @@ class Presentation
 		@slides << slides
 	end 
 
-	# def view_slide
-	# end
+	def view_slide
+		puts @slides
+	end
+
+	def to_s
+		return 
+	end 
 
 
 end  
@@ -30,7 +35,8 @@ class Slides
 	# require 'TermInfo'
 
 	def initialize(text)
-	@text = text 
+	@text = text
+	@text.strip
 	end 
 
 	def view_content
@@ -57,22 +63,27 @@ patriciappt = Presentation.new
 #read from keynot.txt and convert that to an array
 slide_content = IO.read("keynote.txt").split("--------------")
 
-# create slides with file contenct
+#pretty print the array of slide contents
 
 pp slide_content
 
+# create slides with file content
+
 slide1 = Slides.new(slide_content[0])
-sldie2 = Slides.new (slide.content[1])
-slide2 =
+slide2 = Slides.new(slide_content[1])
+slide3 = Slides.new(slide_content[2])
+
+#view the content of slide 1 
 
 slide1.view_content
 
-# slide2 = Slides.new ("The iTerminal")
-# slide3 = Slides.new ("Is Here")
-
 # #then add first slide to presentation (add array to presentation)
-# patriciappt.Add_Slides(slide1)
-# puts 
+patriciappt.Add_Slides(slide1)
+patriciappt.Add_Slides(slide2)
+patriciappt.Add_Slides(slide3)
+#view slides in presentation 
+
+patriciappt.view_slide
 
 # #prompt user 
 
